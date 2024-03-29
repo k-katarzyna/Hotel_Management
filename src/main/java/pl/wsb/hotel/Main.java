@@ -1,4 +1,4 @@
-package pl.wsb.hotel;
+package src.main.java.pl.wsb.hotel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class Main {
                 client_1,
                 room_1,
                 LocalDate.of(2024, 3, 29),
-                LocalDate.of(2024,4,1),
+                LocalDate.of(2024, 4, 1),
                 false);
 
         System.out.println("1st reservation:");
@@ -70,7 +70,7 @@ public class Main {
                 client_2,
                 rooms,
                 LocalDate.of(2024, 4, 28),
-                LocalDate.of(2024,5,4),
+                LocalDate.of(2024, 5, 4),
                 true);
 
         reservation_2.confirmReservation();

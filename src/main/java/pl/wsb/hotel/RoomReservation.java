@@ -1,4 +1,4 @@
-package pl.wsb.hotel;
+package src.main.java.pl.wsb.hotel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -6,6 +6,8 @@ import java.util.List;
 import java.time.temporal.ChronoUnit;
 
 public class RoomReservation {
+
+    // fields //
     private LocalDate date;
     private boolean isConfirmed;
     private Client client;

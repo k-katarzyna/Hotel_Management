@@ -1,4 +1,4 @@
-package pl.wsb.hotel;
+package src.main.java.pl.wsb.hotel;
 
 import java.time.LocalDate;
 

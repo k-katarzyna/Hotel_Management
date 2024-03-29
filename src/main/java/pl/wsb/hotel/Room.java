@@ -1,8 +1,9 @@
-package pl.wsb.hotel;
+package src.main.java.pl.wsb.hotel;
 
+// fields //
 public class Room {
     private String id;
-    private  double area;
+    private double area;
     private int floor;
     private boolean hasKingSizeBed;
     private int numberOfBeds;
