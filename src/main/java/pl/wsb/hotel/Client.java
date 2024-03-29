@@ -22,7 +22,7 @@ public class Client {
                   String phoneNumber,
                   String emailAddress,
                   int totalGuests,
-                  boolean parkingSpot) {
+                  boolean withParkingSpot) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
