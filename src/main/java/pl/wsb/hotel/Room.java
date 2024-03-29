@@ -26,6 +26,7 @@ public class Room {
         this.amenities = amenities;
     }
 
+    // getters //
     public String getId() {
         return id;
     }

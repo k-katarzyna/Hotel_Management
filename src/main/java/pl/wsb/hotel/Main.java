@@ -72,6 +72,7 @@ public class Main {
                 LocalDate.of(2024, 4, 28),
                 LocalDate.of(2024,5,4),
                 true);
+
         reservation_2.confirmReservation();
 
         System.out.println("2nd reservation:");
