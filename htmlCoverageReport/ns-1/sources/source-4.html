@@ -1,0 +1,225 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > HotelExceptionsTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pl.wsb.hotel</a>
+</div>
+
+<h1>Coverage Summary for Class: HotelExceptionsTest (pl.wsb.hotel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">HotelExceptionsTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    85.4%
+  </span>
+  <span class="absValue">
+    (35/41)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pl.wsb.hotel;
+&nbsp;
+&nbsp;import static org.junit.jupiter.api.Assertions.*;
+&nbsp;import org.junit.jupiter.api.Test;
+&nbsp;
+&nbsp;import pl.wsb.hotel.exceptions.ClientNotFoundException;
+&nbsp;import pl.wsb.hotel.exceptions.ReservationNotFoundException;
+&nbsp;import pl.wsb.hotel.exceptions.RoomNotFoundException;
+&nbsp;import pl.wsb.hotel.exceptions.RoomReservedException;
+&nbsp;
+&nbsp;import java.time.LocalDate;
+&nbsp;
+<b class="fc">&nbsp;public class HotelExceptionsTest {</b>
+&nbsp;
+<b class="fc">&nbsp;    private final Hotel hotelUnderTests = new Hotel(&quot;Very Fancy&quot;);</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void shouldThrowClientNotFoundExceptionWhileCallingAddNewReservation() throws RoomNotFoundException, RoomReservedException {
+&nbsp;        // given
+<b class="fc">&nbsp;        String fakeClientId = &quot;clientFakeId&quot;;</b>
+<b class="fc">&nbsp;        String roomId = hotelUnderTests.addRoom(12, 1, true, &quot;&quot;);</b>
+<b class="fc">&nbsp;        LocalDate date = LocalDate.of(2024, 5, 20);</b>
+&nbsp;
+&nbsp;        // when
+&nbsp;        try {
+<b class="fc">&nbsp;            hotelUnderTests.addNewReservation(fakeClientId, roomId, date);</b>
+<b class="nc">&nbsp;            fail(&quot;Expected ClientNotFoundException to be thrown&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        catch (ClientNotFoundException exception) {</b>
+&nbsp;            // then
+<b class="fc">&nbsp;            assertEquals(&quot;Client with ID &quot; + fakeClientId + &quot; not found.&quot;, exception.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void shouldThrowRoomNotFoundExceptionWhileCallingAddNewReservation() throws ClientNotFoundException, RoomNotFoundException {
+&nbsp;        // given
+<b class="fc">&nbsp;        String clientId = hotelUnderTests.addClient(&quot;John&quot;, &quot;Doe&quot;, LocalDate.of(1990, 5, 5));</b>
+<b class="fc">&nbsp;        String fakeRoomId = &quot;fakeRoomId&quot;;</b>
+<b class="fc">&nbsp;        LocalDate date = LocalDate.of(2024, 5, 20);</b>
+&nbsp;
+&nbsp;        // when
+&nbsp;        try {
+<b class="fc">&nbsp;            hotelUnderTests.addNewReservation(clientId, fakeRoomId, date);</b>
+<b class="nc">&nbsp;            fail(&quot;Expected RoomNotFoundException to be thrown&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        catch (RoomNotFoundException exception) {</b>
+&nbsp;            // then
+<b class="fc">&nbsp;            assertEquals(&quot;Room with ID &quot; + fakeRoomId + &quot; not found.&quot;, exception.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void shouldThrowRoomReservedExceptionIfRoomIsNotAvailableAtTheDate() throws ClientNotFoundException, RoomNotFoundException {
+&nbsp;        // given
+<b class="fc">&nbsp;        String clientId = hotelUnderTests.addClient(&quot;John&quot;, &quot;Doe&quot;, LocalDate.of(1990, 5, 5));</b>
+<b class="fc">&nbsp;        String roomId = hotelUnderTests.addRoom(12, 1, true, &quot;&quot;);</b>
+<b class="fc">&nbsp;        LocalDate date = LocalDate.of(2024, 5, 20);</b>
+<b class="fc">&nbsp;        String reservationId = hotelUnderTests.addNewReservation(clientId, roomId, date);</b>
+<b class="fc">&nbsp;        hotelUnderTests.setReservationEndDate(reservationId, LocalDate.of(2024, 5, 25));</b>
+&nbsp;
+&nbsp;        // when
+&nbsp;        try {
+<b class="fc">&nbsp;            hotelUnderTests.addNewReservation(clientId, roomId, date);</b>
+<b class="nc">&nbsp;            fail(&quot;Expected RoomReservedException to be thrown&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        catch (RoomReservedException exception) {</b>
+&nbsp;            // then
+<b class="fc">&nbsp;            assertEquals(String.format(&quot;On %s, the room %s is booked.&quot;, date, roomId), exception.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void shouldThrowReservationNotFoundExceptionIfReservationDoesNotExist() throws ClientNotFoundException, RoomReservedException {
+&nbsp;        // given
+<b class="fc">&nbsp;        String fakeReservationId = &quot;fakeReservationId&quot;;</b>
+&nbsp;
+&nbsp;        // when
+&nbsp;        try {
+<b class="fc">&nbsp;            hotelUnderTests.confirmReservation(fakeReservationId);</b>
+<b class="nc">&nbsp;            fail(&quot;Expected ReservationNotFoundException to be thrown&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        catch (ReservationNotFoundException exception) {</b>
+&nbsp;            // then
+<b class="fc">&nbsp;            assertEquals(&quot;Reservation with ID &quot; + fakeReservationId + &quot; not found.&quot;, exception.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void shouldThrowRoomNotFoundExceptionWhileCallingIsRoomReserved() {
+&nbsp;        // given
+<b class="fc">&nbsp;        String fakeRoomId = &quot;fakeRoomId&quot;;</b>
+<b class="fc">&nbsp;        LocalDate date = LocalDate.of(2024, 5, 20);</b>
+&nbsp;
+&nbsp;        // when
+&nbsp;        try {
+<b class="fc">&nbsp;            hotelUnderTests.isRoomReserved(fakeRoomId, date);</b>
+<b class="nc">&nbsp;            fail(&quot;Expected RoomNotFoundException to be thrown&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        catch (RoomNotFoundException exception) {</b>
+&nbsp;            // then
+<b class="fc">&nbsp;            assertEquals(&quot;Room with ID &quot; + fakeRoomId + &quot; not found.&quot;, exception.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void shouldThrowClientNotFoundExceptionWhileCallingGetRoomIdsReserverByClient () {
+&nbsp;        // given
+<b class="fc">&nbsp;        String fakeClientId = &quot;fakeRoomId&quot;;</b>
+&nbsp;
+&nbsp;        // when
+&nbsp;        try {
+<b class="fc">&nbsp;        hotelUnderTests.getRoomIdsReservedByClient(fakeClientId);</b>
+<b class="nc">&nbsp;        fail(&quot;Expected ClientNotFoundException to be thrown&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        catch (ClientNotFoundException exception) {</b>
+&nbsp;        // then
+<b class="fc">&nbsp;        assertEquals(&quot;Client with ID &quot; + fakeClientId + &quot; not found.&quot;, exception.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-16 16:03</div>
+</div>
+</body>
+</html>

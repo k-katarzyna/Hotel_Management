@@ -1,0 +1,272 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > RoomReservation</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pl.wsb.hotel</a>
+</div>
+
+<h1>Coverage Summary for Class: RoomReservation (pl.wsb.hotel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RoomReservation</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (14/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (8/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95.7%
+  </span>
+  <span class="absValue">
+    (45/47)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pl.wsb.hotel;
+&nbsp;
+&nbsp;import pl.wsb.hotel.interfaces.ExcludeFromCodeCoverage;
+&nbsp;
+&nbsp;import java.time.LocalDate;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.time.temporal.ChronoUnit;
+&nbsp;import java.util.UUID;
+&nbsp;
+&nbsp;public class RoomReservation {
+<b class="fc">&nbsp;    private String id = UUID.randomUUID().toString();</b>
+<b class="fc">&nbsp;    private LocalDate reservationDate = LocalDate.now();</b>
+<b class="fc">&nbsp;    private boolean isConfirmed = false;</b>
+&nbsp;    private Client client;
+&nbsp;    private Room room;
+&nbsp;    private List&lt;Room&gt; rooms;
+&nbsp;    private LocalDate startDate;
+&nbsp;    private LocalDate endDate;
+&nbsp;    private boolean breakfast;
+&nbsp;    private int totalGuests;
+&nbsp;    private boolean withParkingSpot;
+&nbsp;
+&nbsp;    // constructors //
+&nbsp;    public RoomReservation(Client client,
+&nbsp;                           Room room,
+&nbsp;                           LocalDate startDate,
+&nbsp;                           LocalDate endDate,
+&nbsp;                           boolean breakfast,
+&nbsp;                           int totalGuests,
+<b class="fc">&nbsp;                           boolean withParkingSpot) {</b>
+<b class="fc">&nbsp;        this.client = client;</b>
+<b class="fc">&nbsp;        this.room = room; // one room reservation</b>
+<b class="fc">&nbsp;        this.startDate = startDate;</b>
+<b class="fc">&nbsp;        this.endDate = endDate;</b>
+<b class="fc">&nbsp;        this.breakfast = breakfast;</b>
+<b class="fc">&nbsp;        this.totalGuests = totalGuests;</b>
+<b class="fc">&nbsp;        this.withParkingSpot = withParkingSpot;</b>
+&nbsp;    }
+&nbsp;    public RoomReservation(Client client,
+&nbsp;                           List&lt;Room&gt; rooms,
+&nbsp;                           LocalDate startDate,
+&nbsp;                           LocalDate endDate,
+&nbsp;                           boolean breakfast,
+&nbsp;                           int totalGuests,
+<b class="fc">&nbsp;                           boolean withParkingSpot) {</b>
+<b class="fc">&nbsp;        this.client = client;</b>
+<b class="fc">&nbsp;        this.rooms = new ArrayList&lt;&gt;(rooms); // multiple rooms reservation</b>
+<b class="fc">&nbsp;        this.startDate = startDate;</b>
+<b class="fc">&nbsp;        this.endDate = endDate;</b>
+<b class="fc">&nbsp;        this.breakfast = breakfast;</b>
+<b class="fc">&nbsp;        this.totalGuests = totalGuests;</b>
+<b class="fc">&nbsp;        this.withParkingSpot = withParkingSpot;</b>
+&nbsp;    }
+&nbsp;    public RoomReservation(Client client,
+&nbsp;                           Room room,
+<b class="fc">&nbsp;                           LocalDate startDate) {</b>
+<b class="fc">&nbsp;        this.client = client;</b>
+<b class="fc">&nbsp;        this.room = room; // one room reservation</b>
+<b class="fc">&nbsp;        this.startDate = startDate;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // confirm reservation //
+&nbsp;    public void confirmReservation() {
+<b class="fc">&nbsp;        this.isConfirmed = true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // getters, setters
+&nbsp;    public String getId() {
+<b class="fc">&nbsp;        return id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public LocalDate getStartDate() {
+<b class="fc">&nbsp;        return startDate;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public LocalDate getEndDate() {
+<b class="fc">&nbsp;        return endDate;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Room getRoom() {
+<b class="fc">&nbsp;        return room;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean getIsConfirmed() {
+<b class="fc">&nbsp;        return isConfirmed;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Client getClient() {
+<b class="fc">&nbsp;        return client;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setEndDate(LocalDate endDate) {
+<b class="fc">&nbsp;        this.endDate = endDate;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // get number of reserved rooms//
+&nbsp;    public int getNumberOfReservedRooms() {
+<b class="fc">&nbsp;        if (room != null) {</b>
+<b class="fc">&nbsp;            return 1;</b>
+<b class="pc">&nbsp;        } else if (rooms != null) {</b>
+<b class="fc">&nbsp;            return rooms.size();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return 0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // calculate number of nights //
+&nbsp;    private long calculateNumberOfNights(LocalDate startDate, LocalDate endDate) {
+<b class="fc">&nbsp;        return ChronoUnit.DAYS.between(startDate, endDate);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // calculate price //
+&nbsp;    public double calculateTotalCost() {
+<b class="fc">&nbsp;        double roomCostPerNight = 0.0;</b>
+&nbsp;
+<b class="pc">&nbsp;        if (room != null) {</b>
+<b class="nc">&nbsp;            roomCostPerNight += room.getPricePerNight();</b>
+<b class="pc">&nbsp;        } else if (rooms != null) {</b>
+<b class="fc">&nbsp;            for (Room room : rooms) {</b>
+<b class="fc">&nbsp;                roomCostPerNight += room.getPricePerNight();</b>
+&nbsp;            }
+&nbsp;        }
+<b class="pc">&nbsp;        double breakfastCostPerPerson = breakfast ? 10.0 : 0.0;</b>
+<b class="fc">&nbsp;        long totalNights = calculateNumberOfNights(startDate, endDate);</b>
+<b class="fc">&nbsp;        double dailyBreakfastCost = breakfastCostPerPerson * totalGuests ;</b>
+&nbsp;
+<b class="fc">&nbsp;        return (roomCostPerNight + dailyBreakfastCost) * totalNights;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // print reservation details //
+&nbsp;    @ExcludeFromCodeCoverage
+&nbsp;    public void printFullReservationDetails() {
+&nbsp;        System.out.println(&quot;--FULL RESERVATION DETAILS--&quot;);
+&nbsp;        System.out.println();
+&nbsp;        System.out.println(&quot;Reservation date: &quot; + reservationDate);
+&nbsp;        System.out.println(&quot;With parking spot: &quot; + (withParkingSpot ? &quot;Yes&quot;: &quot;No&quot;));
+&nbsp;        System.out.println(&quot;With breakfast: &quot; + (breakfast ? &quot;Yes&quot;: &quot;No&quot;));
+&nbsp;        System.out.println(&quot;Total guests: &quot; + totalGuests);
+&nbsp;        System.out.println(&quot;Number of reserved rooms: &quot; + getNumberOfReservedRooms());
+&nbsp;        System.out.println(&quot;Total cost $: &quot; + calculateTotalCost());
+&nbsp;        System.out.println(&quot;Stay from: &quot; + startDate + &quot; to &quot; + endDate);
+&nbsp;        System.out.println(&quot;Confirmed: &quot; + (isConfirmed ? &quot;Yes&quot;: &quot;No&quot;) + &quot;\n&quot;);
+&nbsp;        client.printInformation();
+&nbsp;        if (room != null) {
+&nbsp;            room.printInformation();
+&nbsp;        } else if (rooms != null) {
+&nbsp;            for (int i = 0; i &lt; rooms.size(); i++) {
+&nbsp;                Room currentRoom = rooms.get(i);
+&nbsp;                System.out.println();
+&nbsp;                System.out.println(&quot;Room &quot; + (i + 1) + &quot;:&quot;);
+&nbsp;                currentRoom.printInformation();
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-16 16:03</div>
+</div>
+</body>
+</html>

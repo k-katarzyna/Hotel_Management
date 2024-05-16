@@ -1,0 +1,240 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > HotelBaseDataTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pl.wsb.hotel</a>
+</div>
+
+<h1>Coverage Summary for Class: HotelBaseDataTest (pl.wsb.hotel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">HotelBaseDataTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (61/61)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pl.wsb.hotel;
+&nbsp;
+&nbsp;import static org.junit.jupiter.api.Assertions.*;
+&nbsp;import org.junit.jupiter.api.Test;
+&nbsp;
+&nbsp;import java.time.LocalDate;
+&nbsp;import java.util.Map;
+&nbsp;
+<b class="fc">&nbsp;class HotelBaseDataTest {</b>
+&nbsp;
+<b class="fc">&nbsp;    private final Hotel hotelUnderTests = new Hotel(&quot;Very Fancy&quot;);</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void shouldAddNewClientAndReturnId() {
+&nbsp;        // given
+<b class="fc">&nbsp;        String name = &quot;John&quot;;</b>
+<b class="fc">&nbsp;        String lastName = &quot;Doe&quot;;</b>
+<b class="fc">&nbsp;        LocalDate birthDate = LocalDate.of(1990, 2, 6);</b>
+<b class="fc">&nbsp;        int age = LocalDate.now().getYear() - birthDate.getYear();</b>
+&nbsp;
+&nbsp;        // when
+<b class="fc">&nbsp;        String newClientId = hotelUnderTests.addClient(name, lastName, birthDate);</b>
+<b class="fc">&nbsp;        Map clients = hotelUnderTests.getClients();</b>
+<b class="fc">&nbsp;        Client client = (Client) clients.get(newClientId);</b>
+&nbsp;
+&nbsp;        // then
+<b class="fc">&nbsp;        assertTrue(clients.containsKey(newClientId));</b>
+<b class="fc">&nbsp;        assertEquals(&quot;John Doe&quot;, client.getFullName());</b>
+<b class="fc">&nbsp;        assertEquals(age, client.getAge());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void shouldReturnClientFullName() {
+&nbsp;        // given
+<b class="fc">&nbsp;        String newClientId = hotelUnderTests.addClient(</b>
+&nbsp;                &quot;John&quot;,
+&nbsp;                &quot;Doe&quot;,
+<b class="fc">&nbsp;                LocalDate.of(1990, 2, 6));</b>
+&nbsp;
+&nbsp;        // when
+<b class="fc">&nbsp;        String clientFullName = hotelUnderTests.getClientFullName(newClientId);</b>
+<b class="fc">&nbsp;        String fakeClientFullName = hotelUnderTests.getClientFullName(&quot;fakeClientId&quot;);</b>
+&nbsp;
+&nbsp;        // then
+<b class="fc">&nbsp;        assertEquals(&quot;John Doe&quot;, clientFullName);</b>
+<b class="fc">&nbsp;        assertEquals(null, fakeClientFullName);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void shouldReturnNumberOfUnderageClients() {
+&nbsp;        // given
+<b class="fc">&nbsp;        hotelUnderTests.addClient(&quot;Lisa&quot;, &quot;Doe&quot;, LocalDate.of(1995, 2, 1));</b>
+<b class="fc">&nbsp;        hotelUnderTests.addClient(&quot;John&quot;, &quot;Doe&quot;, LocalDate.of(2014, 8, 6));</b>
+<b class="fc">&nbsp;        hotelUnderTests.addClient(&quot;Adam&quot;, &quot;Doe&quot;, LocalDate.of(2006, 4, 6));</b>
+<b class="fc">&nbsp;        hotelUnderTests.addClient(&quot;Anna&quot;, &quot;Jones&quot;, LocalDate.of(2006, 6, 1));</b>
+&nbsp;
+&nbsp;        // when
+<b class="fc">&nbsp;        int numberOfUnderageClients = hotelUnderTests.getNumberOfUnderageClients();</b>
+&nbsp;
+&nbsp;        // then //tested 15th May 2024
+<b class="fc">&nbsp;        assertEquals(2, numberOfUnderageClients);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void shouldAddNewRoomAndReturnId() {
+&nbsp;        // given
+<b class="fc">&nbsp;        double area = 12.5;</b>
+<b class="fc">&nbsp;        int floor = 3;</b>
+<b class="fc">&nbsp;        String description = &quot;Sunny and cosy single room.&quot;;</b>
+&nbsp;
+&nbsp;        // when
+<b class="fc">&nbsp;        String newRoomId = hotelUnderTests.addRoom(area, floor, false, description);</b>
+<b class="fc">&nbsp;        Map rooms = hotelUnderTests.getRooms();</b>
+<b class="fc">&nbsp;        Room room = (Room) rooms.get(newRoomId);</b>
+&nbsp;
+&nbsp;        // then
+<b class="fc">&nbsp;        assertTrue(rooms.containsKey(newRoomId));</b>
+<b class="fc">&nbsp;        assertEquals(area, room.getArea());</b>
+<b class="fc">&nbsp;        assertEquals(floor, room.getFloor());</b>
+<b class="fc">&nbsp;        assertEquals(description, room.getDescription());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void shouldReturnRoomArea() {
+&nbsp;        // given
+<b class="fc">&nbsp;        String roomId = hotelUnderTests.addRoom(16.3, 0, false, &quot;&quot;);</b>
+&nbsp;
+&nbsp;        //when
+<b class="fc">&nbsp;        double roomArea = hotelUnderTests.getRoomArea(roomId);</b>
+<b class="fc">&nbsp;        double fakeRoomArea = hotelUnderTests.getRoomArea(&quot;fakeRoomId&quot;);</b>
+&nbsp;
+&nbsp;        // then
+<b class="fc">&nbsp;        assertEquals(16.3, roomArea);</b>
+<b class="fc">&nbsp;        assertEquals(0.0, fakeRoomArea);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void shouldReturnNumberOfRoomsWithKingSizeBedOnSpecifiedFloor() {
+&nbsp;        // given
+<b class="fc">&nbsp;        hotelUnderTests.addRoom(12.2, 1, true, &quot;&quot;);</b>
+<b class="fc">&nbsp;        hotelUnderTests.addRoom(9.0, 1, false, &quot;&quot;);</b>
+<b class="fc">&nbsp;        hotelUnderTests.addRoom(12.2, 2, true, &quot;&quot;);</b>
+<b class="fc">&nbsp;        hotelUnderTests.addRoom(14, 2, true, &quot;&quot;);</b>
+<b class="fc">&nbsp;        hotelUnderTests.addRoom(10, 2, false, &quot;&quot;);</b>
+&nbsp;
+&nbsp;        // when
+<b class="fc">&nbsp;        int floor1 = hotelUnderTests.getNumberOfRoomsWithKingSizeBed(1);</b>
+<b class="fc">&nbsp;        int floor2 = hotelUnderTests.getNumberOfRoomsWithKingSizeBed(2);</b>
+&nbsp;
+&nbsp;        // then
+<b class="fc">&nbsp;        assertEquals(1, floor1);</b>
+<b class="fc">&nbsp;        assertEquals(2, floor2);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    void shouldAddSpecialServicesToTheList() {
+&nbsp;        //given
+<b class="fc">&nbsp;        SpecialService timeService = new TimeService();</b>
+<b class="fc">&nbsp;        SpecialService luggageService = new LuggageService();</b>
+&nbsp;
+&nbsp;        // when
+<b class="fc">&nbsp;        hotelUnderTests.addService(timeService);</b>
+<b class="fc">&nbsp;        hotelUnderTests.addService(luggageService);</b>
+<b class="fc">&nbsp;        String timeServiceDescription = hotelUnderTests.getSpecialServices().get(0).getServiceDescription();</b>
+<b class="fc">&nbsp;        String luggageServiceDescription = hotelUnderTests.getSpecialServices().get(1).getServiceDescription();</b>
+<b class="fc">&nbsp;        boolean luggageServiceAvailable = hotelUnderTests.getSpecialServices().get(1).isAvailable(</b>
+<b class="fc">&nbsp;                LocalDate.of(2024, 6, 2));</b>
+&nbsp;
+&nbsp;        // then
+<b class="fc">&nbsp;        assertEquals(timeService, (hotelUnderTests.getSpecialServices().get(0)));</b>
+<b class="fc">&nbsp;        assertEquals(luggageService, (hotelUnderTests.getSpecialServices().get(1)));</b>
+<b class="fc">&nbsp;        assertEquals(&quot;Only the most accurate &quot; + timeService.name, timeServiceDescription);</b>
+<b class="fc">&nbsp;        assertEquals(&quot;The fastest and best &quot; + luggageService.name, luggageServiceDescription);</b>
+<b class="fc">&nbsp;        assertEquals(true, luggageServiceAvailable);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-16 16:03</div>
+</div>
+</body>
+</html>

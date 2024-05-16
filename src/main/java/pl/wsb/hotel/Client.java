@@ -1,64 +1,63 @@
-package src.main.java.pl.wsb.hotel;
+package pl.wsb.hotel;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class Client {
 
     // fields //
-    private String id;
-    private String firstName;
-    private String lastName;
-    private LocalDate birthDate;
-    private String phoneNumber;
-    private String emailAddress;
-    private int totalGuests;
-    private boolean withParkingSpot;
+    protected String id = UUID.randomUUID().toString();
+    protected String firstName;
+    protected String lastName;
+    protected LocalDate birthDate;
+    protected String phoneNumber;
+    protected String emailAddress;
 
-    // constructor //
-    public Client(String id,
-                  String firstName,
+    // constructors //
+    public Client(String firstName,
                   String lastName,
                   LocalDate birthDate,
                   String phoneNumber,
-                  String emailAddress,
-                  int totalGuests,
-                  boolean withParkingSpot) {
-        this.id = id;
+                  String emailAddress) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
-        this.totalGuests = totalGuests;
-        this.withParkingSpot = withParkingSpot;
+    }
+
+    public Client(String firstName,
+                  String lastName,
+                  LocalDate birthDate) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
     }
 
     // getters //
+    public String getId() {
+        return id;
+    }
+
     public int getAge() {
-        return LocalDate.now().getYear() - birthDate.getYear();
+        LocalDate now = LocalDate.now();
+        int age = now.getYear() - birthDate.getYear();
+        if (birthDate.getDayOfYear() > now.getDayOfYear()) {
+            age--;
+        }
+        return age;
     }
 
     public String getFullName() {
         return firstName + " " + lastName;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-
-    public int getTotalGuests() {
-        return totalGuests;
-    }
-
-    public String getWithParkingSpot() {
-        return withParkingSpot ? "Yes": "No";
+    public void printInformation(){
+        System.out.println();
+        System.out.println("Client ID: " + id);
+        System.out.println("Client full name: " + getFullName());
+        System.out.println("Client age: " + getAge());
+        System.out.println("Client phone number: " + phoneNumber);
+        System.out.println("Client email address: " + emailAddress);
     }
 }

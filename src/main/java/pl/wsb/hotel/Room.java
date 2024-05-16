@@ -1,24 +1,26 @@
-package src.main.java.pl.wsb.hotel;
+package pl.wsb.hotel;
 
-// fields //
+import pl.wsb.hotel.interfaces.ExcludeFromCodeCoverage;
+
+import java.util.UUID;
+
 public class Room {
-    private String id;
+    private String id = UUID.randomUUID().toString();
     private double area;
     private int floor;
     private boolean hasKingSizeBed;
+    private String description;
     private int numberOfBeds;
     private double pricePerNight;
     private String amenities;
 
-    // constructor //
-    public Room(String id,
-                double area,
+    // constructors //
+    public Room(double area,
                 int floor,
                 boolean hasKingSizeBed,
                 int numberOfBeds,
                 double pricePerNight,
                 String amenities) {
-        this.id = id;
         this.area = area;
         this.floor = floor;
         this.hasKingSizeBed = hasKingSizeBed;
@@ -27,7 +29,17 @@ public class Room {
         this.amenities = amenities;
     }
 
-    // getters //
+    public Room(double area,
+                int floor,
+                boolean hasKingSizeBed,
+                String description) {
+        this.area = area;
+        this.floor = floor;
+        this.hasKingSizeBed = hasKingSizeBed;
+        this.description = description;
+    }
+
+    // getters
     public String getId() {
         return id;
     }
@@ -44,15 +56,24 @@ public class Room {
         return hasKingSizeBed;
     }
 
-    public int getNumberOfBeds() {
-        return numberOfBeds;
+    public String getDescription() {
+        return description;
     }
 
     public double getPricePerNight() {
         return pricePerNight;
     }
 
-    public String getAmenities() {
-        return amenities;
+    @ExcludeFromCodeCoverage
+    public void printInformation(){
+        System.out.println();
+        System.out.println("Room ID: " + id);
+        System.out.println("Room Area: " + area);
+        System.out.println("Room Floor: " + floor);
+        System.out.println("Room Has King Size Bed: " + hasKingSizeBed);
+        System.out.println("Room description: " + description);
+        System.out.println("Room Number of Beds: " + numberOfBeds);
+        System.out.println("Room Price per Night: " + pricePerNight);
+        System.out.println("Room Amenities: " + amenities);
     }
 }

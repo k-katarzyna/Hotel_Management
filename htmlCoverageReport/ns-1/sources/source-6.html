@@ -1,0 +1,122 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > LuggageService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pl.wsb.hotel</a>
+</div>
+
+<h1>Coverage Summary for Class: LuggageService (pl.wsb.hotel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LuggageService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80%
+  </span>
+  <span class="absValue">
+    (4/5)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pl.wsb.hotel;
+&nbsp;
+&nbsp;import java.time.LocalDate;
+&nbsp;
+&nbsp;public class LuggageService extends SpecialService{
+<b class="fc">&nbsp;    public LuggageService(){</b>
+<b class="fc">&nbsp;        this.name = &quot;Luggage storage&quot;;</b>
+&nbsp;    }
+&nbsp;    public void orderService(){
+<b class="nc">&nbsp;        System.out.println(&quot;Luggage successfully thrown o... stored!&quot;);</b>
+&nbsp;    }
+&nbsp;    public String getServiceDescription(){
+<b class="fc">&nbsp;        return &quot;The fastest and best &quot; + name;</b>
+&nbsp;    }
+&nbsp;    public boolean isAvailable(LocalDate date){
+<b class="fc">&nbsp;        return (date.getDayOfMonth() % 2) == 0; //only available on even days</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-16 16:03</div>
+</div>
+</body>
+</html>

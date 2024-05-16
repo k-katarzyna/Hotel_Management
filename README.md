@@ -1,6 +1,5 @@
-Object Oriented Programming, Task 1
+Programowanie obiektowe (całe zadanie)
 
-Students: \
-Damian Wyrwiński (ID number 79818) \
-Katarzyna Kołoda (ID number 99693) \
-Maciek Zientara (ID number 99948)
+Damian Wyrwiński (nr albumu 79818)\
+Katarzyna Kołoda (nr albumu 99693)\
+Maciek Zientara (nr albumu 99948)\

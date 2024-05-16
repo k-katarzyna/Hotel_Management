@@ -1,0 +1,301 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Hotel</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">pl.wsb.hotel</a>
+</div>
+
+<h1>Coverage Summary for Class: Hotel (pl.wsb.hotel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Hotel</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (19/19)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97.9%
+  </span>
+  <span class="absValue">
+    (47/48)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (80/80)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package pl.wsb.hotel;
+&nbsp;
+&nbsp;import pl.wsb.hotel.exceptions.ClientNotFoundException;
+&nbsp;import pl.wsb.hotel.exceptions.RoomNotFoundException;
+&nbsp;import pl.wsb.hotel.exceptions.RoomReservedException;
+&nbsp;import pl.wsb.hotel.exceptions.ReservationNotFoundException;
+&nbsp;import pl.wsb.hotel.interfaces.HotelCapability;
+&nbsp;
+&nbsp;import java.time.LocalDate;
+&nbsp;import java.util.*;
+&nbsp;
+&nbsp;public class Hotel implements HotelCapability {
+&nbsp;    private String name;
+&nbsp;    private List&lt;SpecialService&gt; specialServices;
+&nbsp;    private Map&lt;String, Client&gt; clients;
+&nbsp;    private Map&lt;String, RoomReservation&gt; roomReservations;
+&nbsp;    private Map&lt;String, Room&gt; rooms;
+&nbsp;
+<b class="fc">&nbsp;    public Hotel(String name){</b>
+<b class="fc">&nbsp;        this.name = name;</b>
+<b class="fc">&nbsp;        specialServices = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        clients = new HashMap&lt;&gt;();</b>
+<b class="fc">&nbsp;        roomReservations = new HashMap&lt;&gt;();</b>
+<b class="fc">&nbsp;        rooms = new HashMap&lt;&gt;();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void addService(SpecialService s) {
+<b class="fc">&nbsp;        specialServices.add(s);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // getters, setters
+&nbsp;    public List&lt;SpecialService&gt; getSpecialServices() {
+<b class="fc">&nbsp;        return specialServices;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Map&lt;String, Client&gt; getClients() {
+<b class="fc">&nbsp;        return clients;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Map&lt;String, RoomReservation&gt; getRoomReservations() {
+<b class="fc">&nbsp;        return roomReservations;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Map&lt;String, Room&gt; getRooms() {
+<b class="fc">&nbsp;        return rooms;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // set reservation end date for checking if room is available at specified date
+&nbsp;    public void setReservationEndDate(String reservationId, LocalDate endDate) {
+<b class="fc">&nbsp;        RoomReservation reservation = roomReservations.get(reservationId);</b>
+<b class="fc">&nbsp;        reservation.setEndDate(endDate);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // helper method - check if room is reserved at specified date //
+&nbsp;    private boolean isRoomReservedAt(RoomReservation reservation, String roomId, LocalDate date) {
+<b class="fc">&nbsp;        return reservation.getRoom().getId().equals(roomId) &amp;&amp;</b>
+<b class="fc">&nbsp;                (date.isAfter(reservation.getStartDate()) || date.isEqual(reservation.getStartDate())) &amp;&amp;</b>
+<b class="fc">&nbsp;                date.isBefore(reservation.getEndDate());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // HotelCapability Interface methods
+&nbsp;    public String addClient(String firstName,
+&nbsp;                            String lastName,
+&nbsp;                            LocalDate birthDate) {
+<b class="fc">&nbsp;        Client newClient = new Client(firstName, lastName, birthDate);</b>
+<b class="fc">&nbsp;        String newClientId = newClient.getId();</b>
+<b class="fc">&nbsp;        clients.put(newClientId, newClient);</b>
+<b class="fc">&nbsp;        return newClientId;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getClientFullName(String clientID) {
+<b class="fc">&nbsp;        Client client = clients.get(clientID);</b>
+<b class="fc">&nbsp;        if (client != null) {</b>
+<b class="fc">&nbsp;            return client.getFullName();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return null;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getNumberOfUnderageClients() {
+<b class="fc">&nbsp;        int countUnderageClients = 0;</b>
+<b class="fc">&nbsp;        for (Client client : clients.values()) {</b>
+<b class="fc">&nbsp;            if (client.getAge() &lt; 18) {</b>
+<b class="fc">&nbsp;                countUnderageClients++;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return countUnderageClients;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String addRoom(double area,
+&nbsp;                          int floor,
+&nbsp;                          boolean hasKingSizeBed,
+&nbsp;                          String description){
+<b class="fc">&nbsp;        Room newRoom = new Room(area, floor, hasKingSizeBed, description);</b>
+<b class="fc">&nbsp;        String roomId = newRoom.getId();</b>
+<b class="fc">&nbsp;        rooms.put(roomId, newRoom);</b>
+<b class="fc">&nbsp;        return roomId;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getRoomArea(String roomId) {
+<b class="fc">&nbsp;        Room room = rooms.get(roomId);</b>
+<b class="fc">&nbsp;            if (room != null){</b>
+<b class="fc">&nbsp;                return room.getArea();</b>
+&nbsp;            }
+<b class="fc">&nbsp;        return 0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getNumberOfRoomsWithKingSizeBed(int floor) {
+<b class="fc">&nbsp;        int nRoomsWithKingSizeBed = 0;</b>
+<b class="fc">&nbsp;        for (Room room : rooms.values()) {</b>
+<b class="fc">&nbsp;            if (room.getFloor() == floor &amp;&amp; room.getHasKingSizeBed()) {</b>
+<b class="fc">&nbsp;                nRoomsWithKingSizeBed++;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return nRoomsWithKingSizeBed;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String addNewReservation(String clientId, String roomId, LocalDate date) throws ClientNotFoundException, RoomNotFoundException, RoomReservedException {
+&nbsp;
+<b class="fc">&nbsp;        Client client = clients.get(clientId);</b>
+<b class="fc">&nbsp;        if (client == null) {</b>
+<b class="fc">&nbsp;            throw new ClientNotFoundException(&quot;Client with ID &quot; + clientId + &quot; not found.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        Room room = rooms.get(roomId);</b>
+<b class="fc">&nbsp;        if (room == null) {</b>
+<b class="fc">&nbsp;            throw new RoomNotFoundException(&quot;Room with ID &quot; + roomId + &quot; not found.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        for (RoomReservation reservation : roomReservations.values()) {</b>
+<b class="fc">&nbsp;            if (isRoomReservedAt(reservation, roomId, date)) {</b>
+<b class="fc">&nbsp;                throw new RoomReservedException(roomId, date);</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        RoomReservation newReservation = new RoomReservation(client, room, date);</b>
+<b class="fc">&nbsp;        String newReservationId = newReservation.getId();</b>
+<b class="fc">&nbsp;        roomReservations.put(newReservationId, newReservation);</b>
+&nbsp;
+<b class="fc">&nbsp;        return newReservationId;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String confirmReservation(String reservationId) throws ReservationNotFoundException {
+<b class="fc">&nbsp;        RoomReservation reservation = roomReservations.get(reservationId);</b>
+<b class="fc">&nbsp;        if (reservation == null) {</b>
+<b class="fc">&nbsp;            throw new ReservationNotFoundException(&quot;Reservation with ID &quot; + reservationId + &quot; not found.&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        reservation.confirmReservation();</b>
+<b class="fc">&nbsp;        return (&quot;Reservation with ID &quot; + reservationId + &quot; confirmed!&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean isRoomReserved(String roomId, LocalDate date) throws RoomNotFoundException {
+<b class="fc">&nbsp;        Room room = rooms.get(roomId);</b>
+<b class="fc">&nbsp;        if (room == null) {</b>
+<b class="fc">&nbsp;            throw new RoomNotFoundException(&quot;Room with ID &quot; + roomId + &quot; not found.&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        for (RoomReservation reservation : roomReservations.values())</b>
+<b class="fc">&nbsp;            if (isRoomReservedAt(reservation, roomId, date)) {</b>
+<b class="fc">&nbsp;                return true;</b>
+&nbsp;            }
+<b class="fc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getNumberOfUnconfirmedReservation(LocalDate date) {
+<b class="fc">&nbsp;        int numberOfUnconfirmedReservations = 0;</b>
+<b class="fc">&nbsp;        for (RoomReservation reservation : roomReservations.values()) {</b>
+<b class="pc">&nbsp;            if (!reservation.getIsConfirmed() &amp;&amp; Objects.equals(reservation.getStartDate(), date))</b>
+<b class="fc">&nbsp;                numberOfUnconfirmedReservations++;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return numberOfUnconfirmedReservations;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Collection&lt;String&gt; getRoomIdsReservedByClient(String clientId) throws ClientNotFoundException {
+<b class="fc">&nbsp;        Client client = clients.get(clientId);</b>
+<b class="fc">&nbsp;        if (client == null) {</b>
+<b class="fc">&nbsp;            throw new ClientNotFoundException(&quot;Client with ID &quot; + clientId + &quot; not found.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        Collection&lt;String&gt; reservedRoomIds = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (RoomReservation reservation : roomReservations.values()) {</b>
+<b class="fc">&nbsp;            if (reservation.getClient().getId().equals(clientId)) {</b>
+<b class="fc">&nbsp;                reservedRoomIds.add(reservation.getRoom().getId());</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return reservedRoomIds;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-16 16:03</div>
+</div>
+</body>
+</html>
